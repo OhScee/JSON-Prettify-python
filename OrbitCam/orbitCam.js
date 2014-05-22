@@ -19,7 +19,6 @@ function init(){
 	var geometry = new THREE.CubeGeometry(5,5,6);
 	var material = new THREE.MeshLambertMaterial({color: 0xF23A11 });
 	cube = new THREE.Mesh(geometry, material);
-	cube.rotation.x = 180;
 	scene.add(cube);
 
 	//get center of cube
@@ -36,7 +35,7 @@ function init(){
 	scene.add(cube2);
 
 	//positioning camera
-	camera.position.set(-2, 0, 20);
+	camera.position.set(-2, 0, 12);
 
 	//camera targets first cube
 	//camera.target.position.copy(cube.position);
@@ -53,22 +52,17 @@ function init(){
 
 function render(){
 	requestAnimationFrame(render);
+	animate();
 	renderer.render(scene, camera);
 }
 
-//function animate(){
+rotSpeed = .02;
+function animate(){
 	//camera moves in a circle
-	/*var x = camera.position.x,
-		y = camera.position.y,
-        	z = camera.position.z;
+	var x = camera.position.x,
+    	y = camera.position.y,
+        z = camera.position.z;
 
-	if (keyboard.pressed("left")){ 
-		camera.position.x = x * Math.cos(rotSpeed) + z * Math.sin(rotSpeed);
-        	camera.position.z = z * Math.cos(rotSpeed) - x * Math.sin(rotSpeed);
-    	} 
-    	else if (keyboard.pressed("right")){
-        	camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed);
-        	camera.position.z = z * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
-    	}
-    	camera.updateProjectionMatrix();*/
-//}
+    camera.position.z = z * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
+    camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed); 
+}
