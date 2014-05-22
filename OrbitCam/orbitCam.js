@@ -2,7 +2,7 @@ var scene, camera, renderer, cube;
 var centerCube;
 
 init();
-render();
+animate();
 
 function init(){
 	scene = new THREE.Scene();
@@ -51,18 +51,20 @@ function init(){
 }
 
 function render(){
-	requestAnimationFrame(render);
-	animate();
 	renderer.render(scene, camera);
 }
 
-rotSpeed = .02;
 function animate(){
+	requestAnimationFrame(animate);
 	//camera moves in a circle
 	var x = camera.position.x,
     	y = camera.position.y,
-        z = camera.position.z;
+      	z = camera.position.z;
+     var rotSpeed = .02;
 
     camera.position.z = z * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
-    camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed); 
+    camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed);
+    camera.lookAt(cube.position);
+
+    render();
 }
