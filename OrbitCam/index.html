@@ -6,7 +6,7 @@
 	</head>
 	<body>
 
-		<script src="js/three.min.js"></script>
+		<script src="three.min.js"></script>
 		<script>
 			var scene, camera, renderer, cube;
 			var centerCube;
@@ -64,6 +64,7 @@
 				renderer.render(scene, camera);
 			}
 
+			var moveUp = true;
 			function animate(){
 				requestAnimationFrame(animate);
 				//camera moves in a circle
@@ -72,8 +73,15 @@
         			z = camera.position.z;
         		var rotSpeed = .02;
 
+        		if(y > 5){ moveUp = false;}
+    			else if(y < 0){ moveUp = true;}
+
         		camera.position.z = z * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
         		camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed);
+
+    			if(moveUp){ camera.position.y += .05;} 
+    			else{camera.position.y -= .05;}
+
         		camera.lookAt(cube.position);
 
     			render();
