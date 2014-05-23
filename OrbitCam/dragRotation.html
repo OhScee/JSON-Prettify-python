@@ -9,6 +9,13 @@
 		<script src="three.min.js"></script>
 		<script src="OrbitControls.js"></script>
 		<script>
+
+		/*Panning camera up and down is okay,
+			rotating camera around target left and right is also okay,
+			need to place restrictions so the user is not able to rotate 
+			camera above or below target */
+
+
 			var camera, scene, controls, renderer, cube;
 
 			init();
@@ -30,13 +37,15 @@
 				//two shapes
 				cube = new THREE.Mesh(geometry, material);
 				scene.add(cube);
-				var cube2 = new THREE.Mesh(geometry, material);
+				var cube2 = new THREE.Mesh(new THREE.CubeGeometry(2,10,3), material);
 				cube2.position.z = -5;
 				cube2.position.x = - 7;
 				cube2.position.y = 3;
 				scene.add(cube2);
 				/* SETS AREA OF FOCUS */
-				controls.target = cube2.position;
+				controls.target = cube.position;
+				controls.noPan = true;
+				controls.maxPolarAngle = 1.5;
 
 				//lighting
 				var light = new THREE.DirectionalLight(0xffffff);
