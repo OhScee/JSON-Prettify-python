@@ -7,12 +7,12 @@
 	<body>
 
 		<script src="three.min.js"></script>
-		<script src="OrbitControls.js"></script>
 		<script>
 			var camera, scene, controls, renderer, cube;
 
 			init();
-			render();
+			
+			animate();
 
 			function init(){
 				scene = new THREE.Scene();
@@ -20,23 +20,19 @@
 				//camera
 				camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
 				camera.position.z = 15;
-				//camera controls
-				controls = new THREE.OrbitControls(camera);
-				controls.addEventListener('change', render);
+				
 
 				var geometry = new THREE.CubeGeometry(6,7,6)
-				var material = new THREE.MeshLambertMaterial({color:0xffffff});
+				var material = new THREE.MeshLambertMaterial({color:0xFA9DCD});
 
 				//two shapes
 				cube = new THREE.Mesh(geometry, material);
 				scene.add(cube);
-				var cube2 = new THREE.Mesh(geometry, material);
+				var cube2 = new THREE.Mesh(new THREE.CubeGeometry(2,2,2), new THREE.MeshLambertMaterial({color: 0x9769FB}) );
 				cube2.position.z = -5;
 				cube2.position.x = - 7;
 				cube2.position.y = 3;
 				scene.add(cube2);
-				/* SETS AREA OF FOCUS */
-				controls.target = cube2.position;
 
 				//lighting
 				var light = new THREE.DirectionalLight(0xffffff);
@@ -61,11 +57,30 @@
 
 				renderer.setSize(window.innerWidth, window.innerHeight);
 
-				redner();
+				render();
 			}
 
 			function render(){
 				renderer.render(scene, camera);
+			}
+
+			//spin baby spin
+			function animate(){
+				requestAnimationFrame(animate);
+				var x = camera.position.x,
+					y = camera.position.y,
+					z = camera.position.z;
+				var rotSpeed = .02;
+				cube.rotation.x += .03;
+				cube.rotation.y += .08;
+
+				camera.position.x = x * Math.cos(rotSpeed) - z * Math.sin(rotSpeed);
+				camera.position.z = z * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
+
+				//face cube
+				camera.lookAt(cube.position);
+
+				render();
 			}
 		</script>
 	</body>
